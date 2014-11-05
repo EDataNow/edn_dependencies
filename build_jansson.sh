@@ -1,47 +1,40 @@
-#!/bin/sh 
+#!/bin/bash
 
 source util.sh
-
-
-clear_downloads
-download "https://googlemock.googlecode.com/files/gmock-1.7.0.zip" gmock-1.7.0.zip
-extract_zip gmock-1.7.0.zip
-
-download "http://www.digip.org/jansson/releases/jansson-2.7.tar.gz" jansson-2.7.tar.gz
-extract_tgz jansson-2.7.tar.gz
-
-exit 1
 
 PRODUCT=jansson-2.7
 copts=""
 
-rm -rf $PRODUCT
-tar -xzf ${PRODUCT}.tar.gz
+ensure_downloaded "http://www.digip.org/jansson/releases/$PRODUCT.tar.gz" $PRODUCT.tar.gz
 
-cd $PRODUCT
+clean_build_dir $PRODUCT
+extract_tgz $PRODUCT.tar.gz
 
-buildit arm64 iPhoneOS $copts
+cd "$BUILD_DIR/$PRODUCT"
+
+build_binary arm64 iPhoneOS $copts
 $AR rv libjansson.arm64.a src/.libs/*.o
 
-buildit armv7s iPhoneOS $copts
+build_binary armv7s iPhoneOS $copts
 $AR rv libjansson.armv7s.a src/.libs/*.o
 
-buildit armv7 iPhoneOS $copts
-$AR rv libjansson.armv7.a src/.libs/*.o
+#build_binary armv7 iPhoneOS $copts
+#$AR rv libjansson.armv7.a src/.libs/*.o
+#
+#build_binary x86_64 iPhoneSimulator $copts
+#$AR rv libjansson.x86_64.a src/.libs/*.o
+#
+#lipo -create libjansson.arm64.a libjansson.armv7s.a libjansson.armv7.a libjansson.x86_64.a -output libjansson.a
+lipo -create libjansson.arm64.a libjansson.armv7s.a -output libjansson.a
 
-buildit i386 iPhoneSimulator $copts
-$AR rv libjansson.i386.a src/.libs/*.o
-
-lipo -create libjansson.arm64.a libjansson.armv7s.a libjansson.armv7.a libjansson.i386.a -output libjansson.a
-
-cd ..
+cd $RUN_DIR
 
 # BUILD jansson.framework
 
-mkdir -p jansson.framework/Headers
-cp $PRODUCT/src/jansson.h jansson.framework/Headers/
-cp $PRODUCT/src/jansson_config.h jansson.framework/Headers/
-cp $PRODUCT/libjansson.a jansson.framework/jansson
-cp jansson-staticFramework-Info.plist jansson.framework/
+mkdir -p $FRAMEWORKS_DIR/jansson.framework/Headers
+cp $BUILD_DIR/$PRODUCT/src/jansson.h $FRAMEWORKS_DIR/jansson.framework/Headers/
+cp $BUILD_DIR/$PRODUCT/src/jansson_config.h $FRAMEWORKS_DIR/jansson.framework/Headers/
+cp $BUILD_DIR/$PRODUCT/libjansson.a $FRAMEWORKS_DIR/jansson.framework/jansson
+cp $PLIST_DIR/jansson-staticFramework-Info.plist $FRAMEWORKS_DIR/jansson.framework/
 
 rm -rf $PRODUCT

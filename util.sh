@@ -5,6 +5,7 @@ export CURL_BUILD=external/curl-ios-build-scripts/build_curl
 # Where to put things
 export DOWNLOAD_DIR=downloads
 export BUILD_DIR=build
+export FRAMEWORKS_DIR=frameworks
 
 # Dev environment stuff
 export SDK=8.1
@@ -22,6 +23,14 @@ ensure_dir_exists()
     DIR=$1
     if [ ! -d "$DIR" ]; then
       mkdir $DIR
+    fi
+}
+
+clean_build_dir()
+{
+    DIR=$1
+    if [ -d "$BUILD_DIR/$DIR" ]; then
+      rm -rf "$BUILD_DIR/$DIR"
     fi
 }
 
@@ -44,6 +53,17 @@ download()
 
     cd $DOWNLOAD_DIR && curl -o $FILENAME "$1" >>$LOGFILE 2>>$ERRFILE
     cd $RUN_DIR
+}
+
+# ensure_downloaded URL FILENAME
+ensure_downloaded()
+{
+  URL=$1
+  FILENAME=$2
+
+  if [ ! -e $DOWNLOAD_DIR ]; then
+  download $URL $FILENAME
+  fi
 }
 
 # extract archive in downloads into appropriate build dir
