@@ -1,0 +1,9 @@
+[submodule "external/curl-ios-build-scripts"]
+	path = external/curl-ios-build-scripts
+	url = git@github.com:EDataNow/curl-ios-build-scripts.git
+[submodule "external/jansson"]
+	path = external/jansson
+	url = git@github.com:EDataNow/jansson.git
+[submodule "external/make-fmwk"]
+	path = external/make-fmwk
+	url = git@github.com:EDataNow/make-fmwk.git
