@@ -4,16 +4,31 @@ export CURL_BUILD=external/curl-ios-build-scripts/build_curl
 
 # Where to put things
 export DOWNLOAD_DIR=downloads
+export BUILD_DIR=build
 
 # Dev environment stuff
 export SDK=8.1
 export XCODE=/Applications/Xcode.app/Contents
 
+export RUN_DIR=`pwd`
+export LOGFILE=$RUN_DIR/build_output.log
+export ERRFILE=$RUN_DIR/build_error.log
+
+
 # Utility functions...
+
+ensure_dir_exists()
+{
+    DIR=$1
+    if [ ! -d "$DIR" ]; then
+      mkdir $DIR
+    fi
+}
 
 # Remove all download files from download dir
 clear_downloads()
 {
+  ensure_dir_exists $DOWNLOAD_DIR
   rm -f $DOWNLOAD_DIR/*
 }
 
@@ -24,9 +39,45 @@ download()
 {
     URL=$1
     FILENAME=$2
-    CWD=`pwd`
-    cd $DOWNLOAD_DIR && curl -o $FILENAME "$1"
-    cd $CWD
+
+    ensure_dir_exists $DOWNLOAD_DIR
+
+    cd $DOWNLOAD_DIR && curl -o $FILENAME "$1" >>$LOGFILE 2>>$ERRFILE
+    cd $RUN_DIR
+}
+
+# extract archive in downloads into appropriate build dir
+# ie. extract_tgz jansson-2.7.tar.gz
+extract_tgz()
+{
+    FILENAME=$1
+
+    ensure_dir_exists $BUILD_DIR
+
+    ARCHIVE="$RUN_DIR/$DOWNLOAD_DIR/$FILENAME"
+    if [ -e "$ARCHIVE" ]; then
+      cd $BUILD_DIR && tar -xzvf "$ARCHIVE" >>$LOGFILE 2>>$ERRFILE
+      cd $RUN_DIR
+    else
+      echo "$ARCHIVE does not exist to extract."
+    fi
+}
+
+# extract archive in downloads into appropriate build dir
+# ie. extract_zip gmock-1.7.0.zip
+extract_zip()
+{
+    FILENAME=$1
+
+    ensure_dir_exists $BUILD_DIR
+
+    ARCHIVE="$RUN_DIR/$DOWNLOAD_DIR/$FILENAME"
+    if [ -e "$ARCHIVE" ]; then
+      cd $BUILD_DIR && unzip -x "$ARCHIVE" >>$LOGFILE 2>>$ERRFILE
+      cd $RUN_DIR
+    else
+      echo "$ARCHIVE does not exist to extract."
+    fi
 }
 
 # Set up build tooling for specified target & platform
@@ -91,5 +142,3 @@ build_binary()
     make clean
     make
 }
-
-echo "It isn't appropriate to run this script. Use a build script for the framework you want to build."
