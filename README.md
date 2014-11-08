@@ -18,6 +18,13 @@ toolchain etc.
 ONLY SOURCE THE build-util.sh FILE FROM THE ROOT OF THIS PROJECT. If you
 source it from somewhere else on your hard drive, things WILL fail.
 
+REMEMBER TO sync the EDN github projects for the build tooling against
+their origins when they are updated for new releases of Xcode.
+(curl-ios-build-scripts, make-fmwk). If the original authors abandon
+those projects, you will need to continue maintenance in the EDN
+project. Consider issuing pull-requests to the original projects if you
+do local work there, they'll appreciate the help.
+
 Quick Ref
 ---------
 
