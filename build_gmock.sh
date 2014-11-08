@@ -24,7 +24,7 @@ assemble_gmock_static_framework() {
   cp $BUILD_DIR/$PRODUCT/include/gmock/internal/*.h $FRAMEWORKS_DIR/gmock.framework/Headers/gmock/internal/
   cp $BUILD_DIR/$PRODUCT/include/gmock/internal/*.pump $FRAMEWORKS_DIR/gmock.framework/Headers/gmock/internal/
 
-  cp ${ARCHS_DIR}/${OUTPUT}/*.a gmock.framework/
+  cp ${ARCHS_DIR}/${OUTPUT}/libgmock.a gmock.framework/libgmock
 
   cp $PLIST_DIR/gmock-staticFramework-Info.plist gmock.framework/
 }
