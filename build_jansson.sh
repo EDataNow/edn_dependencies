@@ -1,9 +1,8 @@
 #!/bin/bash
 
-source util.sh
+source build-util.sh
 
 PRODUCT=jansson-2.7
-copts=""
 
 ensure_downloaded "http://www.digip.org/jansson/releases/$PRODUCT.tar.gz" $PRODUCT.tar.gz
 
@@ -12,20 +11,22 @@ extract_tgz $PRODUCT.tar.gz
 
 cd "$BUILD_DIR/$PRODUCT"
 
-build_binary arm64 iPhoneOS $copts
-$AR rv libjansson.arm64.a src/.libs/*.o
+build_binary x86_64 iPhoneSimulator
+$AR rv libjansson.x86_64.a src/.libs/*.o
 
-build_binary armv7s iPhoneOS $copts
+make distclean
+build_binary armv7 iPhoneOS
+$AR rv libjansson.armv7.a src/.libs/*.o
+
+make distclean
+build_binary armv7s iPhoneOS
 $AR rv libjansson.armv7s.a src/.libs/*.o
 
-#build_binary armv7 iPhoneOS $copts
-#$AR rv libjansson.armv7.a src/.libs/*.o
-#
-#build_binary x86_64 iPhoneSimulator $copts
-#$AR rv libjansson.x86_64.a src/.libs/*.o
-#
-#lipo -create libjansson.arm64.a libjansson.armv7s.a libjansson.armv7.a libjansson.x86_64.a -output libjansson.a
-lipo -create libjansson.arm64.a libjansson.armv7s.a -output libjansson.a
+make distclean
+build_binary arm64 iPhoneOS
+$AR rv libjansson.arm64.a src/.libs/*.o
+
+lipo -create libjansson.arm64.a libjansson.armv7s.a libjansson.armv7.a libjansson.x86_64.a -output libjansson.a
 
 cd $RUN_DIR
 

@@ -6,6 +6,7 @@ export CURL_BUILD=external/curl-ios-build-scripts/build_curl
 export DOWNLOAD_DIR=downloads
 export BUILD_DIR=build
 export FRAMEWORKS_DIR=frameworks
+export PLIST_DIR=plist_files
 
 # Dev environment stuff
 export SDK=8.1
@@ -18,27 +19,39 @@ export ERRFILE=$RUN_DIR/build_error.log
 
 # Utility functions...
 
-ensure_dir_exists()
-{
-    DIR=$1
-    if [ ! -d "$DIR" ]; then
-      mkdir $DIR
-    fi
+ensure_dir_exists() {
+  DIR=$1
+  if [ ! -d "$DIR" ]; then
+    mkdir $DIR
+  fi
 }
 
-clean_build_dir()
-{
-    DIR=$1
-    if [ -d "$BUILD_DIR/$DIR" ]; then
-      rm -rf "$BUILD_DIR/$DIR"
-    fi
+clear_build_dir() {
+  DIR=$1
+  if [ -d "$BUILD_DIR/$DIR" ]; then
+    rm -rf "$BUILD_DIR/$DIR"
+  fi
+}
+
+clear_log_files() {
+  if [ -e "$LOGFILE" ]; then
+    rm -rf $LOGFILE
+  fi
+  if [ -e "$ERRFILE" ]; then
+    rm -rf $ERRFILE
+  fi
 }
 
 # Remove all download files from download dir
-clear_downloads()
-{
+clear_downloads() {
   ensure_dir_exists $DOWNLOAD_DIR
   rm -f $DOWNLOAD_DIR/*
+}
+
+clear_all() {
+  clear_downloads
+  clear_log_files
+  clear_build_dir
 }
 
 # download URL FILENAME
@@ -61,8 +74,10 @@ ensure_downloaded()
   URL=$1
   FILENAME=$2
 
-  if [ ! -e $DOWNLOAD_DIR ]; then
-  download $URL $FILENAME
+  ensure_dir_exists $DOWNLOAD_DIR
+
+  if [ ! -e "$DOWNLOAD_DIR/$FILENAME" ]; then
+    download $URL $FILENAME
   fi
 }
 
@@ -133,6 +148,7 @@ setup_cflags()
 run_configure()
 {
     TARGET=$1
+    shift
     CONFIG_OPTS=$*
 
     if [ $TARGET == "arm64" ]; then
@@ -156,6 +172,16 @@ build_binary()
 
     setup_commands $TARGET $PLATFORM
     setup_cflags $TARGET $PLATFORM
+
+    echo "Using:"
+    echo $CC
+    echo $CXX
+    echo $LD
+    echo $AR
+    echo $RANLIB
+
+    echo "CFLAGS:"
+    echo $CFLAGS
 
     run_configure $TARGET $CONFIG_OPTS
 

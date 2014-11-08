@@ -1,6 +1,6 @@
 #!/bin/sh 
 
-source util.sh
+source build-util.sh
 
 PRODUCT=gmock-1.7.0
 copts=""
