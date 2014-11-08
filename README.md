@@ -21,8 +21,8 @@ source it from somewhere else on your hard drive, things WILL fail.
 Quick Ref
 ---------
 
-./build_jansson.sh
-./build_gmock.sh
+  ./build_jansson.sh
+  ./build_gmock.sh
 
 Directory Structure
 -------------------
@@ -60,21 +60,25 @@ that means, kindly move along, you may be soggy and hard to light.
 OK, now that we're alone let's get to it. Calling the functions in
 build-utils.sh can be tricky.
 
-. build-utils.sh
-
 Step 1, get the functions into your current bash session.
 
-setup_commands arm64 iPhoneOS
+  . build-utils.sh
+
+Step 2, try and figure out what's wrong by building the product using
+lower-level functions and work your way up. Most problems will be in how
+lib archives are assembled, and new processor architectures.
+
+  setup_commands arm64 iPhoneOS
 
 Currently we don't use the target architecture argument, but we might
 one day. This will set up your CC, CXX, LD, AR and RANLIB environment
 variables so that ./configure can find them correctly.
 
-setup_cflags arm64 iPhoneOS
+  setup_cflags arm64 iPhoneOS
 
 Similarly, this will set up CFLAGS for you.
 
-run_configure arm64
+  run_configure arm64
 
 This will run configure for that architecture. There is logic here to
 handle --host correctly (ie. arm64 is aarch64).
