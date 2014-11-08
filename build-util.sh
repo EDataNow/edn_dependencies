@@ -15,14 +15,14 @@ export XCODE=/Applications/Xcode.app/Contents
 export RUN_DIR=`pwd`
 export LOGFILE=$RUN_DIR/build_output.log
 export ERRFILE=$RUN_DIR/build_error.log
-
+export ARCHS_DIR=$RUN_DIR/$BUILD_DIR/archs
 
 # Utility functions...
 
 ensure_dir_exists() {
   DIR=$1
   if [ ! -d "$DIR" ]; then
-    mkdir $DIR
+    mkdir -p $DIR
   fi
 }
 
@@ -162,8 +162,7 @@ run_configure()
 
 # Build the binary for the current directory
 # build_binary {armv7|armv7s|arm64|i386|x86_64} {iPhoneOS|iPhoneSimulator} {any configure options required}
-build_binary()
-{
+build_binary() {
     TARGET=$1
     PLATFORM=$2
     shift
@@ -173,18 +172,27 @@ build_binary()
     setup_commands $TARGET $PLATFORM
     setup_cflags $TARGET $PLATFORM
 
-    echo "Using:"
-    echo $CC
-    echo $CXX
-    echo $LD
-    echo $AR
-    echo $RANLIB
-
-    echo "CFLAGS:"
-    echo $CFLAGS
-
     run_configure $TARGET $CONFIG_OPTS
 
     make clean
     make
+}
+
+build_static_archive() {
+  OUTPUT=$1
+  TARGET=$2
+  PLATFORM=$3
+  OBJECTS=$4
+
+  build_binary $TARGET $PLATFORM
+
+  ensure_dir_exists "$ARCHS_DIR/$OUTPUT"
+
+  $AR rv "${ARCHS_DIR}/${OUTPUT}/${OUTPUT}.${TARGET}.a" $OBJECTS
+}
+
+assemble_static_archives() {
+  OUTPUT=$1
+
+  lipo -create "${ARCHS_DIR}/${OUTPUT}/${OUTPUT}.*.a" -output "${ARCHS_DIR}/${OUTPUT}/${OUTPUPT}.a"
 }
