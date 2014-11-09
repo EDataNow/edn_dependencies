@@ -188,6 +188,10 @@ build_static_archive() {
 
   ensure_dir_exists "$ARCHS_DIR/$OUTPUT"
 
+  if [ $AR == ""]; then
+    export AR=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar
+  fi
+
   $AR rv "${ARCHS_DIR}/${OUTPUT}/${OUTPUT}.${TARGET}.a" $OBJECTS
 }
 

@@ -17,7 +17,7 @@ assemble_jansson_static_framework() {
   cp $BUILD_DIR/$PRODUCT/src/jansson.h $FRAMEWORKS_DIR/jansson.framework/Headers/
   cp $BUILD_DIR/$PRODUCT/src/jansson_config.h $FRAMEWORKS_DIR/jansson.framework/Headers/
 
-  cp $BUILD_DIR/$PRODUCT/libjansson.a $FRAMEWORKS_DIR/jansson.framework/jansson
+  cp $ARCHS_DIR/libjansson/libjansson.a $FRAMEWORKS_DIR/jansson.framework/jansson
 
   cp $PLIST_DIR/jansson-staticFramework-Info.plist $FRAMEWORKS_DIR/jansson.framework/
 }
