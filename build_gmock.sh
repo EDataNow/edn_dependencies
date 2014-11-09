@@ -24,9 +24,9 @@ assemble_gmock_static_framework() {
   cp $BUILD_DIR/$PRODUCT/include/gmock/internal/*.h $FRAMEWORKS_DIR/gmock.framework/Headers/gmock/internal/
   cp $BUILD_DIR/$PRODUCT/include/gmock/internal/*.pump $FRAMEWORKS_DIR/gmock.framework/Headers/gmock/internal/
 
-  cp ${ARCHS_DIR}/${OUTPUT}/libgmock.a gmock.framework/libgmock
+  cp ${ARCHS_DIR}/${OUTPUT}/libgmock.a $FRAMEWORKS_DIR/gmock.framework/gmock
 
-  cp $PLIST_DIR/gmock-staticFramework-Info.plist gmock.framework/
+  cp $PLIST_DIR/gmock-staticFramework-Info.plist $FRAMEWORKS_DIR/gmock.framework/
 }
 
 ensure_downloaded "https://googlemock.googlecode.com/files/${PRODUCT}.zip" $PRODUCT.zip
