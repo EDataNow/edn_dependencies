@@ -18,6 +18,7 @@ ensure_dir_exists $ARCHS_DIR
 $RUN_DIR/external/curl-ios-build-scripts/build_curl --archs armv7,armv7s,arm64,x86_64 --no-cleanup --work-dir $BUILD_DIR/curl --result-dir $ARCHS_DIR/curl
 
 # Bug in current curl-ios-build-scripts, ignores --work-dir and --result-dir directives
+rm -rf $ARCHS_DIR/curl
 mv $RUN_DIR/curl $ARCHS_DIR
 
 assemble_curl_static_framework
