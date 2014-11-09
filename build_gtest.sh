@@ -17,12 +17,11 @@ build_gtest_static_archive() {
 }
 
 assemble_gtest_static_framework() {
-  ensure_dir_exists $FRAMEWORKS_DIR/gtest.framework/Headers/gtest/internal
-  cp $BUILD_DIR/$PRODUCT/include/gtest/gtest.h $FRAMEWORKS_DIR/gtest.framework/Headers/gtest.h
-  cp $BUILD_DIR/$PRODUCT/include/gtest/*.h $FRAMEWORKS_DIR/gtest.framework/Headers/gtest/
-  cp $BUILD_DIR/$PRODUCT/include/gtest/*.pump $FRAMEWORKS_DIR/gtest.framework/Headers/gtest/
-  cp $BUILD_DIR/$PRODUCT/include/gtest/internal/*.h $FRAMEWORKS_DIR/gtest.framework/Headers/gtest/internal/
-  cp $BUILD_DIR/$PRODUCT/include/gtest/internal/*.pump $FRAMEWORKS_DIR/gtest.framework/Headers/gtest/internal/
+  ensure_dir_exists $FRAMEWORKS_DIR/gtest.framework/Headers/internal
+  cp $BUILD_DIR/$PRODUCT/include/gtest/*.h $FRAMEWORKS_DIR/gtest.framework/Headers/
+  cp $BUILD_DIR/$PRODUCT/include/gtest/*.pump $FRAMEWORKS_DIR/gtest.framework/Headers/
+  cp $BUILD_DIR/$PRODUCT/include/gtest/internal/*.h $FRAMEWORKS_DIR/gtest.framework/Headers/internal/
+  cp $BUILD_DIR/$PRODUCT/include/gtest/internal/*.pump $FRAMEWORKS_DIR/gtest.framework/Headers/internal/
 
   cp ${ARCHS_DIR}/${OUTPUT}/libgtest.a $FRAMEWORKS_DIR/gtest.framework/gtest
 

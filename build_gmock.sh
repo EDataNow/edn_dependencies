@@ -17,12 +17,11 @@ build_gmock_static_archive() {
 }
 
 assemble_gmock_static_framework() {
-  ensure_dir_exists $FRAMEWORKS_DIR/gmock.framework/Headers/gmock/internal
-  cp $BUILD_DIR/$PRODUCT/include/gmock/gmock.h $FRAMEWORKS_DIR/gmock.framework/Headers/gmock.h
-  cp $BUILD_DIR/$PRODUCT/include/gmock/*.h $FRAMEWORKS_DIR/gmock.framework/Headers/gmock/
-  cp $BUILD_DIR/$PRODUCT/include/gmock/*.pump $FRAMEWORKS_DIR/gmock.framework/Headers/gmock/
-  cp $BUILD_DIR/$PRODUCT/include/gmock/internal/*.h $FRAMEWORKS_DIR/gmock.framework/Headers/gmock/internal/
-  cp $BUILD_DIR/$PRODUCT/include/gmock/internal/*.pump $FRAMEWORKS_DIR/gmock.framework/Headers/gmock/internal/
+  ensure_dir_exists $FRAMEWORKS_DIR/gmock.framework/Headers/internal
+  cp $BUILD_DIR/$PRODUCT/include/gmock/*.h $FRAMEWORKS_DIR/gmock.framework/Headers/
+  cp $BUILD_DIR/$PRODUCT/include/gmock/*.pump $FRAMEWORKS_DIR/gmock.framework/Headers/
+  cp $BUILD_DIR/$PRODUCT/include/gmock/internal/*.h $FRAMEWORKS_DIR/gmock.framework/Headers/internal/
+  cp $BUILD_DIR/$PRODUCT/include/gmock/internal/*.pump $FRAMEWORKS_DIR/gmock.framework/Headers/internal/
 
   cp ${ARCHS_DIR}/${OUTPUT}/libgmock.a $FRAMEWORKS_DIR/gmock.framework/gmock
 
