@@ -27,18 +27,18 @@ extract_tgz $PRODUCT.tar.gz
 
 cd "$BUILD_DIR/$PRODUCT"
 
-build_static_archive libjansson x86_64 iPhoneSimulator
+build_jansson_static_archive libjansson x86_64 iPhoneSimulator
 
 make distclean
-build_static_archive libjansson armv7 iPhoneOS
+build_jansson_static_archive libjansson armv7 iPhoneOS
 
 make distclean
-build_static_archive libjansson armv7s iPhoneOS
+build_jansson_static_archive libjansson armv7s iPhoneOS
 
 make distclean
-build_static_archive libjansson arm64 iPhoneOS
+build_jansson_static_archive libjansson arm64 iPhoneOS
 
-assemble_static_archives libjansson
+build_jansson_static_archive libjansson
 
 cd $RUN_DIR
 
