@@ -194,5 +194,5 @@ build_static_archive() {
 assemble_static_archives() {
   OUTPUT=$1
 
-  lipo -create "${ARCHS_DIR}/${OUTPUT}/${OUTPUT}.*.a" -output "${ARCHS_DIR}/${OUTPUT}/${OUTPUPT}.a"
+  lipo -create ${ARCHS_DIR}/${OUTPUT}/${OUTPUT}.*.a -output "${ARCHS_DIR}/${OUTPUT}/${OUTPUT}.a"
 }
