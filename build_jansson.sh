@@ -16,7 +16,9 @@ assemble_jansson_static_framework() {
   ensure_dir_exists $FRAMEWORKS_DIR/jansson.framework/Headers
   cp $BUILD_DIR/$PRODUCT/src/jansson.h $FRAMEWORKS_DIR/jansson.framework/Headers/
   cp $BUILD_DIR/$PRODUCT/src/jansson_config.h $FRAMEWORKS_DIR/jansson.framework/Headers/
+
   cp $BUILD_DIR/$PRODUCT/libjansson.a $FRAMEWORKS_DIR/jansson.framework/jansson
+
   cp $PLIST_DIR/jansson-staticFramework-Info.plist $FRAMEWORKS_DIR/jansson.framework/
 }
 
@@ -42,4 +44,5 @@ build_jansson_static_archive libjansson
 
 cd $RUN_DIR
 
+assemble_static_archives libjansson
 assemble_jansson_static_framework
