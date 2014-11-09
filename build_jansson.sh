@@ -22,7 +22,7 @@ assemble_jansson_static_framework() {
 
 ensure_downloaded "http://www.digip.org/jansson/releases/$PRODUCT.tar.gz" $PRODUCT.tar.gz
 
-clean_build_dir $PRODUCT
+clear_build_dir $PRODUCT
 extract_tgz $PRODUCT.tar.gz
 
 cd "$BUILD_DIR/$PRODUCT"
