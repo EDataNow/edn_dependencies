@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
   <key>Project compiled</key>
-  <string>curl</string>
+  <string>gtest</string>
   <key>Configuration used</key>
   <string>Release</string>
   <key>iOS SDK version used</key>
