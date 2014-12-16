@@ -5,7 +5,7 @@ source build-util.sh
 assemble_curl_static_framework() {
   ensure_dir_exists $FRAMEWORKS_DIR/curl.framework/Headers
 
-  cp $ARCHS_DIR/curl/ios-dev/lib/libcurl.a $FRAMEWORKS_DIR/curl.framework/curl
+  lipo -create $ARCHS_DIR/curl/ios-dev/lib/libcurl.a $ARCHS_DIR/curl/osx/lib/libcurl.a -output $FRAMEWORKS_DIR/curl.framework/curl
   cp $ARCHS_DIR/curl/ios-dev/include/* $FRAMEWORKS_DIR/curl.framework/Headers
 
   cp $PLIST_DIR/curl-staticFramework-Info.plist $FRAMEWORKS_DIR/curl.framework/
