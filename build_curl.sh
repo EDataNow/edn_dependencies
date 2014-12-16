@@ -3,12 +3,16 @@
 source build-util.sh
 
 assemble_curl_static_framework() {
-  ensure_dir_exists $FRAMEWORKS_DIR/curl.framework/Headers
+  ensure_dir_exists $FRAMEWORKS_DIR/ios/curl.framework/Headers
+  ensure_dir_exists $FRAMEWORKS_DIR/osx/curl.framework/Headers
 
-  lipo -create $ARCHS_DIR/curl/ios-dev/lib/libcurl.a $ARCHS_DIR/curl/osx/lib/libcurl.a -output $FRAMEWORKS_DIR/curl.framework/curl
-  cp $ARCHS_DIR/curl/ios-dev/include/* $FRAMEWORKS_DIR/curl.framework/Headers
+  cp $ARCHS_DIR/curl/ios-dev/lib/libcurl.a $FRAMEWORKS_DIR/ios/curl.framework/curl
+  cp $ARCHS_DIR/curl/ios-dev/include/* $FRAMEWORKS_DIR/ios/curl.framework/Headers
+  cp $PLIST_DIR/curl-staticFramework-Info.plist $FRAMEWORKS_DIR/ios/curl.framework/
 
-  cp $PLIST_DIR/curl-staticFramework-Info.plist $FRAMEWORKS_DIR/curl.framework/
+  cp $ARCHS_DIR/curl/osx/lib/libcurl.a $FRAMEWORKS_DIR/osx/curl.framework/curl
+  cp $ARCHS_DIR/curl/osx/include/* $FRAMEWORKS_DIR/osx/curl.framework/Headers
+  cp $PLIST_DIR/curl-staticFramework-Info.plist $FRAMEWORKS_DIR/osx/curl.framework/
 }
 
 # Bug in current curl-ios-build-scripts
