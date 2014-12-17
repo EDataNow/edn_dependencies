@@ -32,6 +32,9 @@ cd "$BUILD_DIR/$PRODUCT"
 build_jansson_static_archive libjansson x86_64 iPhoneSimulator
 
 make distclean
+build_jansson_static_archive libjansson i386 iPhoneSimulator
+
+make distclean
 build_jansson_static_archive libjansson armv7 iPhoneOS
 
 make distclean
@@ -40,7 +43,8 @@ build_jansson_static_archive libjansson armv7s iPhoneOS
 make distclean
 build_jansson_static_archive libjansson arm64 iPhoneOS
 
-build_jansson_static_archive libjansson
+#make distclean
+#build_jansson_static_archive libjansson x86_64 OSX
 
 cd $RUN_DIR
 
