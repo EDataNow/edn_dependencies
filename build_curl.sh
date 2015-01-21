@@ -13,6 +13,9 @@ assemble_curl_static_framework() {
   cp $ARCHS_DIR/curl/osx/lib/libcurl.a $FRAMEWORKS_DIR/osx/curl.framework/curl
   cp $ARCHS_DIR/curl/osx/include/* $FRAMEWORKS_DIR/osx/curl.framework/Headers
   cp $PLIST_DIR/curl-staticFramework-Info.plist $FRAMEWORKS_DIR/osx/curl.framework/
+
+  # Incorporating patch http://home.comcast.net/~seiryu/libcurl-ios.html
+  patch -i $RUN_DIR/patches/curl_headers.patch -d $FRAMEWORKS_DIR/ios/curl.framework/Headers
 }
 
 # Bug in current curl-ios-build-scripts
